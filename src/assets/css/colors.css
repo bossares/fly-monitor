@@ -1,0 +1,9 @@
+.bg-gray { background-color: #b3b3b3; }
+.bg-green { background-color: #34a853; }
+.bg-red { background-color: #ea4335; }
+.bg-blue { background-color: #00a1f1; }
+
+.hover-bg-color-filter:hover { filter: brightness(115%); }
+.active-bg-color-filter:active { filter: brightness(85%); }
+
+.transition { transition: 0.2s; }
