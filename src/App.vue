@@ -17,4 +17,5 @@ export default {
 
 <style scoped>
 @import "./assets/css/colors.css";
+@import "./assets/css/sizes.css";
 </style>

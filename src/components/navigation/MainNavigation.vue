@@ -45,7 +45,7 @@ export default {
 }
 
 .navigation .item:not(.router-link-exact-active):hover {
-  filter: brightness(115%);
+  filter: brightness(108%);
 }
 
 .navigation .item.router-link-exact-active {

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <TextBtn>ок</TextBtn>
-    <IconedBtn
+    <!-- <IconedBtn
       bgColor="bg-blue"
       hint="Изменить"
       :icon="require('./../assets/icons/airplane-edit.svg')"
@@ -16,22 +15,32 @@
       hint="Удалить"
       :icon="require('./../assets/icons/delete-empty.svg')"
     />
-    <IconedBtn hint="Добавить" :icon="require('./../assets/icons/plus.svg')" />
-    <InputField />
+    <IconedBtn hint="Добавить" :icon="require('./../assets/icons/plus.svg')" />-->
+    <MainTable
+      :isShownControls="isAdminModeActive"
+      @toggleIsShownControls="isAdminModeActive = !isAdminModeActive"
+      @filter="test"
+    />
   </div>
 </template>
 
 <script>
-import TextBtn from "../components/buttons/TextBtn.vue";
-import IconedBtn from "../components/buttons/IconedBtn.vue";
-import InputField from "../components/inputs/InputField.vue";
+import MainTable from "../components/MainTable.vue";
 
 export default {
   name: "PageIncomings",
   components: {
-    TextBtn,
-    IconedBtn,
-    InputField,
+    MainTable,
+  },
+  data() {
+    return {
+      isAdminModeActive: false,
+    };
+  },
+  methods: {
+    test(v) {
+      console.log(v);
+    },
   },
 };
 </script>
