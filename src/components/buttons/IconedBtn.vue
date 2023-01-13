@@ -3,6 +3,7 @@
     class="iconedBtn hover-bg-color-filter active-bg-color-filter transition"
     :class="bgColor"
     :title="hint"
+    @click="$emit('click')"
   >
     <img class="icon" :src="icon" :alt="imgAlt" />
   </button>
@@ -41,6 +42,7 @@ export default {
   margin: 0;
   padding: 0;
   border: none;
+  min-width: 28px;
   width: 28px;
   height: 28px;
   border-radius: 2px;

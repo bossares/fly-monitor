@@ -2,6 +2,7 @@
   <button
     class="textBtn hover-bg-color-filter active-bg-color-filter transition"
     :class="bgColor"
+    @click="$emit('click')"
   >
     <p class="title">
       <slot />
