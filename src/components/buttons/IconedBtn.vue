@@ -21,7 +21,13 @@ export default {
       type: String,
       default: "bg-green",
       validator(value) {
-        return ["bg-green", "bg-red", "bg-gray", "bg-blue"].includes(value);
+        return [
+          "bg-green",
+          "bg-red",
+          "bg-gray",
+          "bg-blue",
+          "bg-dark-gray",
+        ].includes(value);
       },
     },
     imgAlt: {

@@ -3,15 +3,14 @@
     <div class="mainTable-head bg-blue">
       <div class="panel">
         <div class="search">
-          <InputField
-            v-model="filters.id"
-            placeholder="Рейс"
-            @input="$emit('filter', filters)"
-          />
-          <InputField
-            v-model="filters.city"
-            placeholder="Город"
-            @input="$emit('filter', filters)"
+          <InputField v-model="filters.id" placeholder="Рейс" />
+          <InputField v-model="filters.city" placeholder="Город" />
+          <IconedBtn
+            class="resetBtn"
+            bgColor="bg-dark-gray"
+            hint="Сброс"
+            :icon="require('./../assets/icons/filter-remove.svg')"
+            @click="resetFilters"
           />
         </div>
         <div class="controls">
@@ -40,10 +39,12 @@
     </div>
     <div class="mainTable-content">
       <MainTableContentItem
-        v-for="(item, idx) in items"
+        v-for="(item, idx) in filteredItems"
         :key="idx"
         :isShownControls="isShownControls"
         v-bind="item"
+        @edit="$emit('edit', item.id)"
+        @remove="$emit('remove', item.id)"
       />
     </div>
   </div>
@@ -88,9 +89,30 @@ export default {
       },
     };
   },
+  computed: {
+    filteredItems() {
+      let result = this.items;
+
+      function filterBy(array, fieldName, fieldValue) {
+        if (fieldValue.length === 0) return array;
+
+        return array.filter((item) =>
+          item[fieldName].toLowerCase().includes(fieldValue.toLowerCase())
+        );
+      }
+
+      for (let key in this.filters)
+        result = filterBy(result, key, this.filters[key]);
+
+      return result;
+    },
+  },
   methods: {
     toggleIsShownControls() {
       this.$emit("toggleIsShownControls");
+    },
+    resetFilters() {
+      for (let key in this.filters) this.filters[key] = "";
     },
   },
 };

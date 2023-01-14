@@ -1,7 +1,8 @@
 <template>
   <button
     class="textBtn hover-bg-color-filter active-bg-color-filter transition"
-    :class="bgColor"
+    :class="[bgColor, fixedWidth ? 'fixed-width' : '']"
+    :disabled="disabled"
     @click="$emit('click')"
   >
     <p class="title">
@@ -14,11 +15,25 @@
 export default {
   name: "TextBtn",
   props: {
+    fixedWidth: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     bgColor: {
       type: String,
       default: "bg-green",
       validator(value) {
-        return ["bg-green", "bg-red", "bg-gray", "bg-blue"].includes(value);
+        return [
+          "bg-green",
+          "bg-red",
+          "bg-gray",
+          "bg-blue",
+          "bg-dark-gray",
+        ].includes(value);
       },
     },
   },
@@ -33,6 +48,12 @@ export default {
   padding: 5px 10px;
   border-radius: 2px;
   cursor: pointer;
+  user-select: none;
+}
+
+.textBtn:disabled {
+  pointer-events: none;
+  opacity: 0.25;
 }
 
 .textBtn .title {
@@ -44,5 +65,9 @@ export default {
   font-size: 14px;
   text-align: center;
   text-transform: uppercase;
+}
+
+.fixed-width {
+  width: 80px;
 }
 </style>
