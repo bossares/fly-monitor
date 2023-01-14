@@ -49,7 +49,7 @@ export default {
 .inputField {
   border: none;
   border-radius: 2px;
-  height: 26px;
+  height: 28px;
   width: 100%;
   max-width: 250px;
   font-family: "Exo2";
@@ -57,6 +57,7 @@ export default {
   font-weight: 500;
   vertical-align: middle;
   padding-left: 8px;
+  box-sizing: border-box;
   opacity: 0.7;
 }
 
