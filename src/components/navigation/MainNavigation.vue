@@ -1,13 +1,42 @@
 <template>
   <nav class="navigation">
-    <router-link class="item bg-gray" to="/">Прилеты</router-link>
-    <router-link class="item bg-gray" to="/outcomings">Вылеты</router-link>
+    <router-link
+      class="item bg-gray"
+      :class="{ active: incomingsActive }"
+      :to="incomingsLink"
+      >Прилеты</router-link
+    >
+    <router-link
+      class="item bg-gray"
+      :class="{ active: outcomingsActive }"
+      :to="outcomingsLink"
+      >Вылеты</router-link
+    >
   </nav>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "MainNavigation",
+  computed: {
+    ...mapGetters(["getIsAdmin"]),
+    incomingsLink() {
+      if (this.getIsAdmin) return "/incomings/admin";
+      else return "/incomings";
+    },
+    outcomingsLink() {
+      if (this.getIsAdmin) return "/outcomings/admin";
+      else return "/outcomings";
+    },
+    incomingsActive() {
+      return this.$route.path.includes("incomings");
+    },
+    outcomingsActive() {
+      return this.$route.path.includes("outcomings");
+    },
+  },
 };
 </script>
 
@@ -44,11 +73,11 @@ export default {
   border-bottom-right-radius: var(--toggler-border-radius);
 }
 
-.navigation .item:not(.router-link-exact-active):hover {
+.navigation .item:not(.active):hover {
   filter: brightness(108%);
 }
 
-.navigation .item.router-link-exact-active {
+.navigation .item.active {
   background-color: #00a1f1;
 }
 </style>

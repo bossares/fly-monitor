@@ -7,12 +7,19 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "incomings",
-    component: PageIncomings,
+    name: "home",
+    redirect: "/incomings/",
   },
   {
-    path: "/outcomings",
+    path: "/incomings/:admin?",
+    name: "incomings",
+    component: PageIncomings,
+    props: true,
+  },
+  {
+    path: "/outcomings/:admin?",
     name: "outcomings",
+    props: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

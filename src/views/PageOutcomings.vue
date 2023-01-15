@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import MainTable from "../components/MainTable.vue";
 import ConfirmDialog from "../components/popups/ConfirmDialog.vue";
 import EditDialog from "../components/popups/EditDialog.vue";
@@ -59,6 +59,12 @@ export default {
     ConfirmDialog,
     EditDialog,
   },
+  props: {
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       isShownCancelDialog: false,
@@ -69,6 +75,11 @@ export default {
     };
   },
   computed: mapGetters(["getIsAdmin", "getOutcomings"]),
+  watch: {
+    admin() {
+      this.setIsAdmin(this.admin);
+    },
+  },
   methods: {
     saveRemoveableId(id) {
       this.removeableId = id;
@@ -118,6 +129,7 @@ export default {
       "editOutcoming",
       "createOutcoming",
     ]),
+    ...mapMutations(["setIsAdmin"]),
   },
   created() {
     if (!this.getOutcomings.length) this.fetchOutcomings(data.outcomings);
