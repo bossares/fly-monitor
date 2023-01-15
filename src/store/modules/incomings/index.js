@@ -18,6 +18,9 @@ export default {
 
       for (let key in result) result[key] = value[key];
     },
+    addIncoming: (state, value) => {
+      state.items.push(value);
+    },
   },
   actions: {
     /* commits must work after fetch or axios is returned the data */
@@ -30,6 +33,10 @@ export default {
     },
     async editIncoming({ commit }, value) {
       await commit("editIncoming", value);
+      await commit("sortIncomings");
+    },
+    async createIncoming({ commit }, value) {
+      await commit("addIncoming", value);
       await commit("sortIncomings");
     },
   },

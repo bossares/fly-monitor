@@ -4,6 +4,7 @@
       :isShownControls="getIsAdmin"
       :items="getIncomings"
       @toggleIsShownControls="toggleIsAdmin(getIsAdmin)"
+      @create="toggleCreateDialog"
       @remove="
         (id) => {
           saveRemoveableId(id);
@@ -24,10 +25,20 @@
     />
     <EditDialog
       v-if="isShownEditDialog"
+      :items="getIncomings"
       :isShown="isShownEditDialog"
       :editeableItemId="editeableId"
+      title="Изменить запись"
       @cancel="cancelEditDialog"
       @confirm="edit"
+    />
+    <EditDialog
+      v-if="isShownCreateDialog"
+      :items="getIncomings"
+      :isShown="isShownCreateDialog"
+      title="Создать запись"
+      @cancel="toggleCreateDialog"
+      @confirm="create"
     />
   </div>
 </template>
@@ -50,6 +61,7 @@ export default {
     return {
       isShownCancelDialog: false,
       isShownEditDialog: false,
+      isShownCreateDialog: false,
       removeableId: "",
       editeableId: "",
     };
@@ -74,6 +86,9 @@ export default {
     toggleConfirmDialog() {
       this.isShownCancelDialog = !this.isShownCancelDialog;
     },
+    toggleCreateDialog() {
+      this.isShownCreateDialog = !this.isShownCreateDialog;
+    },
     cancelEditDialog() {
       this.resetEditeableId();
       this.toggleEditDialog();
@@ -81,6 +96,10 @@ export default {
     cancelConfirmDialog() {
       this.resetRemoveableId();
       this.toggleConfirmDialog();
+    },
+    create(value) {
+      this.createIncoming(value);
+      this.toggleCreateDialog();
     },
     remove() {
       this.removeIncoming(this.removeableId);
@@ -95,6 +114,7 @@ export default {
       "fetchIncomings",
       "removeIncoming",
       "editIncoming",
+      "createIncoming",
     ]),
   },
   created() {
