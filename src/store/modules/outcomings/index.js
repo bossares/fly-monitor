@@ -7,10 +7,28 @@ export default {
   },
   mutations: {
     setOutcomings: (state, items) => (state.items = items),
-    sortOutcomings: (state) =>
-      state.items
-        .sort((a, b) => parseInt(a.time) - parseInt(b.time))
-        .sort((a, b) => parseInt(a.date) - parseInt(b.date)),
+    sortOutcomings: (state) => {
+      //modify date format from dd.mm.yyyy to yyyymmdd
+      state.items.map(
+        (item) => (item.date = item.date.split(".").reverse().join(""))
+      );
+
+      //parseInt method can work correctly only when the string has no any symbols
+      state.items.sort((a, b) => parseInt(a.time) - parseInt(b.time));
+      state.items.sort((a, b) => parseInt(a.date) - parseInt(b.date));
+
+      //modify date format from yyyymmdd to dd.mm.yyyy
+      state.items.map(
+        (item) =>
+          (item.date = `${
+            item.date.slice(-2) +
+            "." +
+            item.date.slice(4, 6) +
+            "." +
+            item.date.slice(0, 4)
+          }`)
+      );
+    },
     deleteOutcoming: (state, id) =>
       (state.items = state.items.filter((item) => item.id != id)),
     editOutcoming: (state, { id, value }) => {
