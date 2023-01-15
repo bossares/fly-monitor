@@ -35,9 +35,16 @@ export default {
     InputField,
   },
   props: {
+    items: {
+      type: Array,
+      default: () => [],
+    },
     title: {
       type: String,
-      default: "Изменить запись",
+      required: true,
+      validator(value) {
+        return value.length > 0;
+      },
     },
     editeableItemId: {
       type: String,
@@ -48,7 +55,7 @@ export default {
       required: true,
     },
   },
-  computed: mapGetters(["getIncomings"]),
+  computed: mapGetters(["getIncomings", "getOutcomings"]),
   data() {
     return {
       isHiding: false,
@@ -88,8 +95,10 @@ export default {
       let isIdHasOnlyNumbers = /^\d+$/.test(this.result.id);
       let isUniqueId =
         this.result.id === this.oldId ||
-        this.getIncomings.find((item) => item.id === this.result.id) ===
-          undefined;
+        (this.getIncomings.find((item) => item.id === this.result.id) ===
+          undefined &&
+          this.getOutcomings.find((item) => item.id === this.result.id) ===
+            undefined);
       let isAllFieldsAreNotEmpty = Object.values(this.result).every(
         (value) => value.length > 0
       );
@@ -116,7 +125,7 @@ export default {
     if (this.editeableItemId)
       Object.assign(
         this.result,
-        this.getIncomings.find((item) => item.id === this.editeableItemId)
+        this.items.find((item) => item.id === this.editeableItemId)
       );
 
     this.oldId = this.result.id;

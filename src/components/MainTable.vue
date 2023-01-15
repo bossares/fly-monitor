@@ -32,7 +32,7 @@
           <IconedBtn
             hint="Добавить"
             :icon="require('./../assets/icons/plus.svg')"
-            @click="$emit('add')"
+            @click="$emit('create')"
           />
         </div>
       </div>
